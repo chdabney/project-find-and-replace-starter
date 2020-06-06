@@ -65,3 +65,15 @@ button {
 .row .cell:hover {
     background: lightsteelblue;
 }
+
+
+.itemsReplacedDiv{
+    line-height: 100px;
+    text-align: center;
+    height: 115px;
+    width: 200px;
+    position: absolute;
+    top: 20px;
+    left: 400px;
+  
+}

@@ -4,6 +4,12 @@
 const findInput = document.querySelector(".find-input")
 const replaceInput = document.querySelector(".replace-input")
 const replaceAllButton = document.querySelector(".replace-all-button")
+const replaceOneButton = document.querySelector(".replace-one-button")
+const caseSensitiveButton = document.querySelector('.caseSensitive')
+const bodyElement = document.querySelector('body')
+const divElement = document.createElement('div')
+
+
 
 // The following variable holds your OUTER ARRAY of row elements.
 // Later you will need an OUTER LOOP to loop over the individual elements within
@@ -21,25 +27,66 @@ function getCellElements(currentRowElement) {
 
 
 // YOUR CODE GOES HERE
+//main search and replace function
 replaceAllButton.addEventListener('click', function () {
-    let findUserInput = findInput.value
+    let userFindInput = findInput.value
     let userReplaceInput = replaceInput.value
+    let numberOfWordsReplaced = 0
+
+
     for (let index = 0; index < rowElements.length; index += 1) {
         let cellElementsArray = getCellElements(rowElements[index])
 
         for (let innerIndex = 0; innerIndex < cellElementsArray.length; innerIndex += 1) {
             let currentCellElement = cellElementsArray[innerIndex]
-            if (currentCellElement.innerHTML.includes(findUserInput)) {
-                let replaceCells = currentCellElement.innerHTML.replace(findUserInput, userReplaceInput)
-                currentCellElement.innerHTML = replaceCells
+            if (currentCellElement.innerHTML.includes(userFindInput)) {
+                currentCellElement.innerHTML = currentCellElement.innerHTML.replace(userFindInput, userReplaceInput)
+
+                numberOfWordsReplaced += 1
+                console.log(numberOfWordsReplaced)
             }
         }
-
     }
+    //creates a div to display number of words replaced
+    divElement.classList.add('itemsReplacedDiv')
+    bodyElement.appendChild(divElement)
+    divElement.innerHTML = `Replaced ${numberOfWordsReplaced} words`
     findInput.value = ''
     replaceInput.value = ''
 })
 
+
+
+// Replace first match
+replaceOneButton.addEventListener('click', function () {
+    let userFindInput = findInput.value
+    let userReplaceInput = replaceInput.value
+    let numberOfWordsReplaced = 0
+    for (let index = 0; index < rowElements.length; index += 1) {
+        let cellElementsArray = getCellElements(rowElements[index])
+
+        for (let innerIndex = 0; innerIndex < cellElementsArray.length; innerIndex += 1) {
+            let currentCellElement = cellElementsArray[innerIndex]
+            if (currentCellElement.innerHTML.includes(userFindInput)) {
+                currentCellElement.innerHTML = currentCellElement.innerHTML.replace(userFindInput, userReplaceInput)
+
+                numberOfWordsReplaced += 1
+                console.log(numberOfWordsReplaced)
+                break
+            }
+
+        }
+        if (numberOfWordsReplaced === 1) {
+            break   //took me way too long to realize this wouldn't work without breaking the loop above first
+        }
+    }
+    divElement.classList.add('itemsReplacedDiv')
+    bodyElement.appendChild(divElement)
+    divElement.innerHTML = `Replaced ${numberOfWordsReplaced} words`
+    findInput.value = ''
+    replaceInput.value = ''
+
+})
 // One last thing: dedicate very careful attention to using variables and
 // naming them accurately.
 // And when you change the value you are assigning to a variable, don't
